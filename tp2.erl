@@ -1,8 +1,7 @@
 -module (tp2).
 -export ([livreLePlusCher / 0, livreLeMoinsCher / 0, trierPrixDeVente / 0,
 	livreEntreDate / 6, livreMeilleurProfit / 0, livreAuteur / 1]).
--record(livre, {isbn, titre = "", auteur1 = "", auteur2 = "", edition = "", prix_achat,
-	prix_vente, nombre_exemplaires_initial, nombre_exemplaires_actuel, date_verification_inventaire}).
+-include("tp2.hrl").
 
 createList() -> [
 	#livre{isbn = 25142, titre = "Deux auteurs pour un livre", auteur1 = "Adrienne LeLandais",
