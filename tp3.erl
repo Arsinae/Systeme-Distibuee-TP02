@@ -1,5 +1,5 @@
 -module (tp3).
--export ([classeDesAdresses / 0]).
+-export ([classeDesAdresses / 0, paysDesAdresses / 0]).
 
 lireFichier(Fichier) -> 
   {ok, ToutesLignes} = file:open(Fichier, [read]), 
@@ -100,3 +100,26 @@ classeDesAdresses() ->
 	Lignes = lireFichier('mesTraces.txt'),
 	Adresses = creerAdresse(Lignes, []),
 	afficherClasses(Adresses).
+	
+nomPays({193, 188, 127, 255}) -> io:fwrite('Bahrain~n');
+nomPays({193, 188, Octet3, _}) when Octet3 >= 64, Octet3 =< 95 -> io:fwrite('Jordan~n');
+nomPays({194, 126, Octet3, _}) when Octet3 >= 32, Octet3 =< 63 -> io:fwrite('Kuwait~n');
+nomPays({194, 165, Octet3, _}) when Octet3 >= 128, Octet3 =< 159 -> io:fwrite('Jordan~n');
+nomPays({194, 170, _, _}) -> io:fwrite('United Arab Emirates~n');
+nomPays({194, 54, Octet3, _}) when Octet3 >= 192 -> io:fwrite('Kuwait~n');
+nomPays({195, Octet2, _, _}) when Octet2 == 174; Octet2 == 175 -> io:fwrite('Turkey~n');
+nomPays({195, 226, Octet3, _}) when Octet3 >= 224 -> io:fwrite('Kuwait~n');
+nomPays({195, 229, _, _}) -> io:fwrite('United Arab Emirates~n');
+nomPays({195, 39, Octet3, _}) when Octet3 >= 128, Octet3 =< 191 -> io:fwrite('Kuwait~n');
+nomPays({203, 135, Octet3, _}) when Octet3 >= 32, Octet3 =< 63 -> io:fwrite('Pakistan~n');
+nomPays({203, 215, Octet3, _}) when Octet3 >= 64, Octet3 =< 95 -> io:fwrite('Philippines~n');
+nomPays({_, _, _, _}) -> io:fwrite('inconnu~n', []);
+nomPays(_) -> io:fwrite('erreur~n', []).
+	
+afficherPays([]) -> 1;
+afficherPays([H | T]) -> printAdress(H), nomPays(H), afficherPays(T).
+	
+paysDesAdresses() ->
+	Lignes = lireFichier('mesTraces.txt'),
+	Adresses = creerAdresse(Lignes, []),
+	afficherPays(Adresses).
