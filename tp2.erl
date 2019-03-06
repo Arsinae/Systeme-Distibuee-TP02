@@ -1,6 +1,6 @@
 -module (tp2).
 -export ([livreLePlusCher / 0, livreLeMoinsCher / 0, trierPrixDeVente / 0,
-	livreEntreDate / 6, livreMeilleurProfit / 0, livreAuteur / 1]).
+	livreEntreDate / 2, livreMeilleurProfit / 0, livreAuteur / 1]).
 -include("tp2.hrl").
 
 createList() -> [
@@ -59,10 +59,10 @@ livreMeilleurProfit() ->
 	
 getBookVerified([], _, _, BookList) -> BookList;
 getBookVerified([H | T], Date1, Date2, BookList) when H#livre.date_verification_inventaire >= Date1, H#livre.date_verification_inventaire =< Date2 ->
-	getBookVerified(T, Date1, Date2, [BookList | H]);
+	getBookVerified(T, Date1, Date2, BookList ++ [H]);
 getBookVerified([_ | T], Date1, Date2, BookList) -> getBookVerified(T, Date1, Date2, BookList).
 	
-livreEntreDate(Annee1, Mois1, Jour1, Annee2, Mois2, Jour2) ->
+livreEntreDate({Annee1, Mois1, Jour1}, {Annee2, Mois2, Jour2}) ->
 	Date1 = calendar:date_to_gregorian_days(Annee1, Mois1, Jour1),
 	Date2 = calendar:date_to_gregorian_days(Annee2, Mois2, Jour2),
 	getBookVerified(createList(), Date1, Date2, []).
