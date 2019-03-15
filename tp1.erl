@@ -1,6 +1,8 @@
 -module (tp1).
 -export ([voyage / 2]).
 
+% Thibaud Huber && Marwan Liani
+
 voyage(_, Prix) when is_integer(Prix), Prix < 0 -> io:fwrite('Argent negatif~n');
 voyage(_, Prix) when not is_integer(Prix) -> io:fwrite('Le prix n est pas un nombre~n');
 voyage('japon', Prix) -> io:fwrite('~w JPY~n', [Prix / 0.0126]);

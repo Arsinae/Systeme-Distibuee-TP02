@@ -1,6 +1,8 @@
 -module (tp3).
 -export ([classeDesAdresses / 0, paysDesAdresses / 0]).
 
+% Thibaud Huber && Marwan Liani
+
 lireFichier(Fichier) -> 
   {ok, ToutesLignes} = file:open(Fichier, [read]), 
   recupererLignes(ToutesLignes, []).
@@ -42,8 +44,15 @@ creerAdresse([H | T], Adresses) ->
 			creerAdresse(T, Adresses ++ ['erreur'])
 	end.
 	
+printBinaryOctet(1.0, 1.0) -> io:fwrite('1.');
+printBinaryOctet(_, 1.0) -> io:fwrite('0.');
+printBinaryOctet(Octet, Divide) when Octet >= Divide -> io:fwrite('1'), printBinaryOctet(Octet - Divide, Divide / 2);
+printBinaryOctet(Octet, Divide) -> io:fwrite('0'), printBinaryOctet(Octet, Divide / 2).
+	
 printAdress({Octet1, Octet2, Octet3, Octet4}) ->
-	io:fwrite('~w.~w.~w.~w : ', [Octet1, Octet2, Octet3, Octet4]);
+	io:fwrite('~w.~w.~w.~w ', [Octet1, Octet2, Octet3, Octet4]),
+	printBinaryOctet(Octet1, 128), printBinaryOctet(Octet2, 128), printBinaryOctet(Octet3, 128), printBinaryOctet(Octet4, 128),
+	io:fwrite(' : ');
 printAdress(_) ->
 	io:fwrite('Adresse : ', []).
 	
@@ -57,7 +66,7 @@ adressePrivee({192, 168, 255, 0}) -> true;
 adressePrivee(_) -> false.
 
 classeA({0, 0, 0, Octet4}) when Octet4 > 0 -> true;
-classeA({Octet1, _, _, _}) when Octet1 < 126 -> true;
+classeA({Octet1, _, _, _}) when Octet1 > 0, Octet1 < 126 -> true;
 classeA({126, _, _, Octet4}) when Octet4 < 255 -> true;
 classeA(_) -> false.
 

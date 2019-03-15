@@ -3,6 +3,8 @@
 	livreEntreDate / 2, livreMeilleurProfit / 0, livreAuteur / 1]).
 -include("tp2.hrl").
 
+% Thibaud Huber && Marwan Liani
+
 createList() -> [
 	#livre{isbn = 25142, titre = "Deux auteurs pour un livre", auteur1 = "Adrienne LeLandais",
 		auteur2 = "Blanche LeTemplier", edition = "Quelque chose", prix_achat = 4.69,
